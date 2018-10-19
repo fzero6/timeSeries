@@ -15,24 +15,18 @@ X_test, X_train, y_test, y_train, max = data_load(data, 0.1)
 
 # Build the LSTM Model
 model = Sequential()
-
-model.add(LSTM(
-    400,
-    return_sequences=True))
+model.add(LSTM(128, return_sequences=True))
 model.add(Dropout(0.2))
-
-model.add(LSTM(
-    400,
-    return_sequences=False))
+model.add(LSTM(64, return_sequences=False))
 model.add(Dropout(0.2))
-
-model.add(Dense(
-    len(y_train)))
-
-model.add(Activation('linear'))
+model.add(Dense(16, init='uniform', activation='relu'))
+model.add(Dense(1, init='uniform', activation='relu'))
 
 start = time.time()
-model.compile(loss='mse', optimizer='rmsprop')
+model.compile(loss='mse', optimizer='adam', metrics=['accuracy'])
+
+
+
 print('compilation time: ', time.time()-start, 'seconds')
 
 model.fit(
