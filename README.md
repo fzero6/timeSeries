@@ -3,5 +3,5 @@ Time series analysis project.
 
 ### TO-DO LIST:
 
-- [ ] y-data in data_in sample numbers do not match x_data. Fix function output
-- [ ]   
+- [ ] data_in(y_data) fix sample number output to match x_data
+- [ ] train LSTM
