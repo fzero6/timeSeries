@@ -35,13 +35,11 @@ def data_load(csv_file, test_size):
     #print(y_data.shape)
 
     # create 3D array to stack data set into smaller chucnks
-    # initialize variables for FOR loop
-    samples = list()
-    for i in range(0,len(x_data), length):
-        sample = x_data[i: i + length]
-        samples.append(sample)
-    #print(len(samples))
-    result = np.array(samples)
+    result = data_stack(x_data)
+    result_y = data_stack(y_data)
+    result = np.array(result)
+    print(result.shape)
+    print(x_data.shape)
 
     #split the data for testing and training
     number = int((len(data_new) * test_size) / length)
@@ -56,15 +54,28 @@ def data_load(csv_file, test_size):
 
     return X_test, X_train, y_test, y_train, max_vals
 
+def data_stack(data,seq_len=50):
+    result = []
+    for i in range(len(data) - seq_len):
+        result.append(data[i: i + seq_len])
+    return result
+
+
+
+def normalize(data_block):
+
+    return data_block_norm
+
+
 X_test, X_train, y_test, y_train, max = data_load(data_file, 0.33)
 
-'''
+
 print(X_test.shape)
 print(X_train.shape)
 print(y_train.shape)
 print(y_test.shape)
 #print(max)
-'''
+
 '''
 def normalize_data(data_window):
     # function normalizes the data for separately for each window

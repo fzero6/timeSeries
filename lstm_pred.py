@@ -13,8 +13,8 @@ data = 'data/daily_sp500/daily/table_nvda.csv'
 # load the data
 X_test, X_train, y_test, y_train, max = data_load(data, 0.1)
 
-print(X_train.shape)
-print(y_train.shape)
+print(X_train.shape) #(17, 200, 4)
+print(y_train.shape) #(3240,)
 
 # Build the LSTM Model
 model = Sequential()
