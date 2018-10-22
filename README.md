@@ -3,8 +3,8 @@ Time series analysis project.
 
 ### TO-DO LIST:
 
-- [check] data_in(y_data) fix sample number output to match x_data
-- [x] train LSTM
+- [x] data_in(y_data) fix sample number output to match x_data
+- [ ] train LSTM
 
 data_in function:
 
