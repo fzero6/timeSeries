@@ -3,8 +3,8 @@ Time series analysis project.
 
 ### TO-DO LIST:
 
-- [ ] data_in(y_data) fix sample number output to match x_data
-- [ ] train LSTM
+- [check] data_in(y_data) fix sample number output to match x_data
+- [x] train LSTM
 
 data_in function:
 
@@ -16,7 +16,7 @@ data_in function:
 5) stack data
 6) normalize data by each data_window (make data window parametric)
 7) output x_train, y_train, x_test, y_test, max_vals?, window_size
-8) 
+8)
 
 
 
