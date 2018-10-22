@@ -5,12 +5,14 @@ import numpy as np
 import pandas as pd
 
 style.use('ggplot')
-
+input_arr = [50, 0.33]  #[legnth, test_split_pct]
 data_file = 'data/daily_sp500/daily/table_nvda.csv'
 
 # fucntion to import stock data in the format OHLCV
-def data_load(csv_file, test_size):
-    length = 200 # data chunks
+def data_load(csv_file, input_arr):
+
+    length = input_arr[0]
+    test_size = input_arr[1]
 
     df = pd.read_csv(csv_file, parse_dates=True,
                       index_col=0, names=['Date','NA' ,'Open', 'High', 'Low', 'Close', 'Volume'])
@@ -31,28 +33,33 @@ def data_load(csv_file, test_size):
     data_new = data[quot:]
 
     x_data = data_new[:, :-1]
+    print('x_data =', x_data.shape)
     y_data = data_new[:, -1]
+    print('y_data =', y_data.shape)
     #print(y_data.shape)
 
     # create 3D array to stack data set into smaller chucnks
     result = data_stack(x_data)
-    result_y = data_stack(y_data)
     result = np.array(result)
-    print(result.shape)
-    print(x_data.shape)
-
+    print('result = ', result.shape)
+    y_result = data_stack(y_data)
+    y_result = np.array(y_result)
+    print('y_result = ', y_result.shape)
     #split the data for testing and training
-    number = int((len(data_new) * test_size) / length)
-    y_number = int(len(data_new) * test_size)
-    #slice the arrays for training and testing
-    X_test = result[:number, :, :]
-    X_train = result[number:, :, :]
-    y_test = y_data[:y_number]
-    y_train = y_data[y_number:]
-    #print('y_test = {}'.format(y_test))
-    #print('y_train = {}'.format(y_train))
+    #split = int((len(data_new) * test_size) / length)
+    split = int(len(data_new) * test_size)
 
-    return X_test, X_train, y_test, y_train, max_vals
+    #slice the arrays for training and testing
+    x_test = result[:split, :, :]
+    x_train = result[split:, :, :]
+    y_test = y_data[:x_test.shape[0]]#y_data[:split]
+    y_train = y_data[-x_train.shape[0]:]
+    print('x_test = {}'.format(x_test.shape))
+    print('y_test = {}'.format(y_test.shape))
+    print('x_train = {}'.format(x_train.shape))
+    print('y_train = {}'.format(y_train.shape))
+
+    return x_test, x_train, y_test, y_train, max_vals
 
 def data_stack(data,seq_len=50):
     result = []
@@ -67,14 +74,8 @@ def normalize(data_block):
     return data_block_norm
 
 
-X_test, X_train, y_test, y_train, max = data_load(data_file, 0.33)
+x_test, x_train, y_test, y_train, max = data_load(data_file, input_arr)
 
-
-print(X_test.shape)
-print(X_train.shape)
-print(y_train.shape)
-print(y_test.shape)
-#print(max)
 
 '''
 def normalize_data(data_window):

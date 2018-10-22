@@ -2,6 +2,8 @@ import time
 #import warnings
 import numpy as np
 from numpy import newaxis
+import tensorflow as tf
+from tensorflow import keras
 from keras.layers.core import Dense, Activation, Dropout
 from keras.layers.recurrent import LSTM
 from keras.models import Sequential
@@ -9,9 +11,9 @@ import matplotlib.pyplot as plt
 from data_in import data_load
 
 data = 'data/daily_sp500/daily/table_nvda.csv'
-
+input_arr = [50, 0.33]
 # load the data
-X_test, X_train, y_test, y_train, max = data_load(data, 0.1)
+X_test, X_train, y_test, y_train, max = data_load(data, input_arr)
 
 print(X_train.shape) #(17, 200, 4)
 print(y_train.shape) #(3240,)
